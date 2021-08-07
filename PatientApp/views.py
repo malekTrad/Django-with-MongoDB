@@ -49,14 +49,14 @@ def patientApi(request,id=0):
         return JsonResponse("Failed Adding patient",safe=False)
     elif request.method=="PUT":
         patient_data=JSONParser().parse(request)
-        patient=doctor.objects.get(DoctorId=patient_data['PatientId'])
+        patient=Patients.objects.get(PatientId=patient_data['PatientId'])
         patient_serializer=PatientsSerializer(patient,data=patient_data)
         if patient_serializer.is_valid():
             patient_serializer.save()
             return JsonResponse("Patient Updated",safe=False)
         return JsonResponse("Failed",safe=False)
     elif request.method=='DELETE':
-        patient=doctor.objects.get(patientId=id)
+        patient=Patients.objects.get(PatientId=id)
         patient.delete()
         return JsonResponse("Deleted",safe=False)
 
